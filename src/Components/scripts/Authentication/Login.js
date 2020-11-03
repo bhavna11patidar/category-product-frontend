@@ -23,12 +23,15 @@ class Login extends Component {
     }
     render() {
         const {email,password}=this.state;
+        console.log(this.props);
+        const error_msg=this.props.auth.error;
         return (
             <div className="container mt-5">
                 <div className="row justify-content-center">
                     <div className="card col-md-6 py-3">
                         
                     <h1 className="text-info text-center">Login</h1>
+                    {error_msg?<p className="text-center text-danger">{error_msg}</p>:null}
                         <div className="form-group">
                             <label>Email</label>
                             <input type="text" name="email" className="form-control" value={email} onChange={this.onHandleChange}></input>
@@ -46,5 +49,7 @@ class Login extends Component {
     }
 }
 
-
-export default  connect(null, {onLogin})(withRouter(Login));
+const mapStateToProps=state=>({
+    auth:state.auth
+})
+export default  connect(mapStateToProps, {onLogin})(withRouter(Login));

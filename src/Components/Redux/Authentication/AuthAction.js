@@ -33,13 +33,11 @@ export const onLogin=(userData, history)=>{
                 localStorage.setItem('user',userData);
                 dispatch(onLoginSuccess(userData));
                 history.push("/dashboard");
-           }else if(res.status==400){
-               console.log(res);
-               dispatch(onLoginFailure(res.data.msg))
            }
         })
         .catch(err=>{
-            console.log(err);
+           // console.log(err.response.data);
+           dispatch(onLoginFailure(err.response.data.msg))
         })
     }
 }
