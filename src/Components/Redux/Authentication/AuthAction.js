@@ -6,7 +6,7 @@ export const onRegister =(newUser, history)=>{
         axios.post("http://localhost:5000/register",newUser)
         .then(res=>{
             if(res.status==200){
-                console.log(res.data);
+               // console.log(res.data);
                 history.push('/');
             }else{
                 console.log(res);
@@ -30,7 +30,7 @@ export const onLogin=(userData, history)=>{
              //console.log(token);  
                 const userData=jwtDecode(token);
                 //console.log(userData);
-                localStorage.setItem('user',userData);
+                localStorage.setItem('user',token);
                 dispatch(onLoginSuccess(userData));
                 history.push("/dashboard");
            }
