@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {onFetchCategories} from './../../../Redux/Category/CategoryAction';
+import {onFetchCategories, onDeleteCategories} from './../../../Redux/Category/CategoryAction';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import { Spinner } from 'reactstrap';
@@ -8,10 +8,20 @@ class Category extends Component {
         super();
     }
     componentDidMount(){
+        console.log("componentDidMount");
         this.props.onFetchCategories();
     }
+
+    onDelete=(id)=>{
+        //console.log(id);
+        this.props.onDeleteCategories(id, this.props.history);
+    }
+    onEdit=(id)=>{
+        //console.log(id);
+        this.props.onDeleteCategories(id, this.props.history);
+    }
     render() {
-        console.log(this.props);
+        //console.log(this.props);
         if(this.props.categories.dataState=="NOT_INITIALIZED" || this.props.categories.dataState=="FETCHING"){
         return (
             <div className="container mt-5 text-center">
@@ -29,12 +39,20 @@ class Category extends Component {
                             <tr>
                                 <th>S. no</th>
                                 <th>Category</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-
+                            {categories.map((el,i)=>(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{el.categoryName}</td>
+                                <td>
+                                    <button className="btn btn-danger btn-sm" onClick={()=>this.onDelete(el._id)}>Delete</button>
+                                    <button className="btn btn-danger btn-sm" onClick={()=>this.onEdit(el._id)}>Delete</button>
+                                </td>
                             </tr>
+                            ))}
                         </tbody>
                     </table>
                     </div>
@@ -53,4 +71,4 @@ class Category extends Component {
 const mapStateToProps=state=>({
     categories:state.categories
 })
-export default  connect(mapStateToProps, {onFetchCategories})(withRouter(Category));
+export default  connect(mapStateToProps, {onFetchCategories, onDeleteCategories})(withRouter(Category));
