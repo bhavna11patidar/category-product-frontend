@@ -41,6 +41,16 @@ export default function(state=initialState, action){
                     ...state,
                     error:action.payload,
                 }
+            case "UPDATE_SUCCESS":
+                return {
+                    ...state,
+                    success_msg:action.payload,
+                }
+            case "UPDATE_FAILURE":
+                return {
+                    ...state,
+                    error:action.payload,
+                }
         default:
             return state;
     }

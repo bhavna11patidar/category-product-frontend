@@ -17,6 +17,12 @@ export default function(state=intialState, action){
                 ...state,
                 error:action.payload,
             }
+        case "ON_LOGOUT_SUCCESS":
+            return {
+                ...state,
+                isAuthenticate:false,
+                user:{},
+            }
         default:
             return state;
     }

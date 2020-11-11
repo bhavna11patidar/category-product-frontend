@@ -18,6 +18,7 @@ import Category from './Components/scripts/Dashboard/Category/Category'
 import AddProduct from './Components/scripts/Dashboard/Product/AddProduct'
 import Product from './Components/scripts/Dashboard/Product/Product'
 import Header from './Components/scripts/Dashboard/Header'
+import EditCategory from './Components/scripts/Dashboard/Category/EditCategory';
 function App() {
 
   const token=localStorage.getItem("user");
@@ -39,6 +40,7 @@ function App() {
       <PrivateRoute exact path="/view-category" component={Category}/>
       <PrivateRoute exact path="/add-product" component={AddProduct}/>
       <PrivateRoute exact path="/view-product" component={Product}/>
+      <PrivateRoute exact path="/edit-category/:id" component={EditCategory}></PrivateRoute>
       <Route exact path="/404" component={PageNotFound}/>
       <Redirect to="/404"/>
       </Switch>

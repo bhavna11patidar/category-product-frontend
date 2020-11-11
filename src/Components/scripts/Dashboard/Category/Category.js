@@ -1,27 +1,37 @@
 import React, { Component } from 'react'
 import {onFetchCategories, onDeleteCategories} from './../../../Redux/Category/CategoryAction';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import { Spinner } from 'reactstrap';
 class Category extends Component {
     constructor(props){
         super();
     }
     componentDidMount(){
-        console.log("componentDidMount");
+        //console.log("componentDidMount");
+        this.getAllCategories()
+    }
+
+
+    getAllCategories=()=>{
         this.props.onFetchCategories();
     }
 
-    onDelete=(id)=>{
+    onDelete=async(id)=>{
         //console.log(id);
-        this.props.onDeleteCategories(id, this.props.history);
+      const res=await this.props.onDeleteCategories(id, this.props.history);
+      if(res){
+        this.getAllCategories();
+      }
     }
     onEdit=(id)=>{
         //console.log(id);
         this.props.onDeleteCategories(id, this.props.history);
     }
     render() {
-        //console.log(this.props);
+       
+        const {success_msg}=this.props.categories;
+        console.log(this.props.categories.success_msg);
         if(this.props.categories.dataState=="NOT_INITIALIZED" || this.props.categories.dataState=="FETCHING"){
         return (
             <div className="container mt-5 text-center">
@@ -34,6 +44,8 @@ class Category extends Component {
             if(categories.length>0){
                 return (
                     <div className="container mt-5">
+                        
+                    {success_msg?<p className="text-success">{success_msg}</p>:""}
                     <table className="table table-bordered">
                         <thead className="thead-dark">
                             <tr>
@@ -49,7 +61,7 @@ class Category extends Component {
                                 <td>{el.categoryName}</td>
                                 <td>
                                     <button className="btn btn-danger btn-sm" onClick={()=>this.onDelete(el._id)}>Delete</button>
-                                    <button className="btn btn-danger btn-sm" onClick={()=>this.onEdit(el._id)}>Delete</button>
+                                    <Link className="btn btn-success btn-sm" to={`edit-category/${el._id}`}>Edit</Link>
                                 </td>
                             </tr>
                             ))}

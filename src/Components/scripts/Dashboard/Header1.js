@@ -1,7 +1,4 @@
-import React, { Component } from 'react';
-import {onLogout} from './../../Redux/Authentication/AuthAction';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import React, {useState} from 'react'
 
 import {
     Collapse,
@@ -10,29 +7,25 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    NavbarText
   } from 'reactstrap';
   import {Link} from 'react-router-dom';
-
-class Header extends Component {
-    constructor(props){
-        super(props);
-        this.state={
-            isOpen:false
-        }
-    }
-    onLogoutClick=()=>{
-       // console.log("1245");
-        this.props.onLogout(this.props.history);
-    }
   
-    toggle = () => {this.setState({isOpen:!this.state.isOpen})};
-    render() {
-        const {isOpen}= this.state;
-        return (
-            <div>
+  const Example = (props) => {
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const toggle = () => setIsOpen(!isOpen);
+  
+    return (
+      <div>
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">Admin Panel</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
+          <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
@@ -51,15 +44,13 @@ class Header extends Component {
                 <Link className="nav-link" to="/view-product">View Product</Link>
               </NavItem>
               <NavItem>
-                <button className="btn btn-success" onClick={this.onLogoutClick}>Logout</button>
+                <button className="btn btn-success">Logout</button>
               </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
       </div>
-
-        )
-    }
-}
-
-export default connect(null, {onLogout})(withRouter(Header));
+    );
+  }
+  
+  export default Example;
